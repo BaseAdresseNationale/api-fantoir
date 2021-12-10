@@ -42,7 +42,7 @@ async function main() {
 
   // Start listening
   const port = process.env.PORT || 5000
-  server.listen(5000, () => {
+  server.listen(port, () => {
     console.log(`Start listening on port ${port}`)
   })
 }
