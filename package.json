@@ -1,0 +1,12 @@
+{
+  "name": "@ban-team/api-fantoir",
+  "version": "0.0.0",
+  "description": "API pour naviguer dans FANTOIR",
+  "repository": "https://github.com/BaseAdresseNationale/api-fantoir",
+  "author": "Équipe Adresse <adresse@data.gouv.fr>",
+  "license": "MIT",
+  "private": false,
+  "engines": {
+    "node": ">= 16.13.0"
+  }
+}
