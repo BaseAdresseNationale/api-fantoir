@@ -6,9 +6,26 @@
   "author": "Équipe Adresse <adresse@data.gouv.fr>",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "lint": "xo"
+  },
   "dependencies": {
     "dotenv": "^10.0.0",
     "mongodb": "^4.2.1"
+  },
+  "devDependencies": {
+    "xo": "^0.47.0"
+  },
+  "xo": {
+    "semicolon": false,
+    "space": 2,
+    "rules": {
+      "comma-dangle": "off",
+      "unicorn/prefer-module": "off",
+      "unicorn/prevent-abbreviations": "off",
+      "import/extensions": "off",
+      "node/prefer-global/process": "off"
+    }
   },
   "engines": {
     "node": ">= 16.13.0"
