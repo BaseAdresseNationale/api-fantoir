@@ -5,6 +5,9 @@ const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const mongo = require('./lib/mongo')
+const w = require('./lib/w')
+const errorHandler = require('./lib/error-handler')
+const {listCommunes, showCommune, listVoies, showVoie} = require('./lib/routes')
 
 function createServer() {
   const app = express()
@@ -16,6 +19,16 @@ function createServer() {
 
   // Enable CORS headers and routes
   app.use(cors({origin: true}))
+
+  /* Define routes */
+  app.get('/departements/:codeDepartement/communes', w(listCommunes))
+  app.get('/communes/:codeCommune', w(showCommune))
+  app.get('/communes/:codeCommune/voies', w(listVoies))
+  app.get('/voies/:idVoie', w(showVoie))
+  app.get('/communes/:codeCommune/voies/:codeVoie', w(showVoie))
+
+  // Setup error handler
+  app.use(errorHandler)
 
   return app
 }
