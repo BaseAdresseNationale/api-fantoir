@@ -12,9 +12,12 @@
   },
   "dependencies": {
     "@etalab/fantoir-parser": "^0.5.0",
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
+    "express": "^4.17.1",
     "got": "^11.8.3",
-    "mongodb": "^4.2.1"
+    "mongodb": "^4.2.1",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "xo": "^0.47.0"

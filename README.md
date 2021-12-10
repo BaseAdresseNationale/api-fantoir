@@ -16,3 +16,9 @@ $ yarn
 # Chargement des données
 $ yarn load-data
 ```
+
+## Démarrer le serveur
+
+```bash
+yarn start
+```
