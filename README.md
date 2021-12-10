@@ -22,3 +22,22 @@ $ yarn load-data
 ```bash
 yarn start
 ```
+
+## API
+
+### Lister les communes d'un département
+
+`GET /departements/54/communes`
+
+### Afficher les informations d'une commune
+
+`GET /communes/54084`
+
+### Lister les voies et les lieux-dits d'une commune
+
+`GET /communes/54084/voies`
+
+### Afficher les informations d'une voie ou d'un lieu-dit
+
+`GET /communes/54084/voies/0100`
+`GET /voies/54084-0100`
