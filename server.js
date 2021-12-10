@@ -4,7 +4,7 @@ require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
-const mongo = require('./lib/util/mongo')
+const mongo = require('./lib/mongo')
 
 function createServer() {
   const app = express()

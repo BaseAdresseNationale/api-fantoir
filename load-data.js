@@ -6,7 +6,7 @@ const {Transform} = require('stream')
 const {finished} = require('stream/promises')
 const got = require('got')
 const {createParser} = require('@etalab/fantoir-parser')
-const mongo = require('./lib/util/mongo')
+const mongo = require('./lib/mongo')
 
 function createLoader(mongo) {
   const communes = []
