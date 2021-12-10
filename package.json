@@ -6,6 +6,10 @@
   "author": "Équipe Adresse <adresse@data.gouv.fr>",
   "license": "MIT",
   "private": false,
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "mongodb": "^4.2.1"
+  },
   "engines": {
     "node": ">= 16.13.0"
   }
