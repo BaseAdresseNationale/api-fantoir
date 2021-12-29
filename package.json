@@ -14,10 +14,10 @@
     "@etalab/fantoir-parser": "^0.5.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
-    "express": "^4.17.1",
+    "express": "^4.17.2",
     "got": "^11.8.3",
-    "http-errors": "^1.8.1",
-    "mongodb": "^4.2.1",
+    "http-errors": "^2.0.0",
+    "mongodb": "^4.2.2",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
