@@ -1,13 +1,14 @@
 #!/usr/bin/env node
-require('dotenv').config()
+import 'dotenv/config.js'
 
-const express = require('express')
-const morgan = require('morgan')
-const cors = require('cors')
-const mongo = require('./lib/mongo')
-const w = require('./lib/w')
-const errorHandler = require('./lib/error-handler')
-const {listCommunes, showCommune, listVoies, showVoie} = require('./lib/routes')
+import express from 'express'
+import morgan from 'morgan'
+import cors from 'cors'
+
+import mongo from './lib/mongo.js'
+import w from './lib/w.js'
+import errorHandler from './lib/error-handler.js'
+import {listCommunes, showCommune, listVoies, showVoie} from './lib/routes.js'
 
 function createServer() {
   const app = express()

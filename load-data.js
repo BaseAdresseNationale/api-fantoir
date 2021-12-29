@@ -1,12 +1,13 @@
 #!/usr/bin/env node
-require('dotenv').config()
+import 'dotenv/config.js'
 
-const {createGunzip} = require('zlib')
-const {Transform} = require('stream')
-const {finished} = require('stream/promises')
-const got = require('got')
-const {createParser} = require('@etalab/fantoir-parser')
-const mongo = require('./lib/mongo')
+import {createGunzip} from 'node:zlib'
+import {Transform} from 'node:stream'
+import {finished} from 'node:stream/promises'
+
+import got from 'got'
+import {createParser} from '@etalab/fantoir-parser'
+import mongo from './lib/mongo.js'
 
 function createLoader(mongo) {
   const communes = []

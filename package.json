@@ -6,6 +6,7 @@
   "author": "Équipe Adresse <adresse@data.gouv.fr>",
   "license": "MIT",
   "private": false,
+  "type": "module",
   "scripts": {
     "lint": "xo",
     "load-data": "node load-data"
@@ -28,9 +29,8 @@
     "space": 2,
     "rules": {
       "comma-dangle": "off",
-      "unicorn/prefer-module": "off",
       "unicorn/prevent-abbreviations": "off",
-      "import/extensions": "off",
+      "import/no-unassigned-import": "off",
       "node/prefer-global/process": "off"
     }
   },
