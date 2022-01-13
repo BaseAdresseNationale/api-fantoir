@@ -29,15 +29,26 @@ yarn start
 
 `GET /departements/54/communes`
 
+Exemple : https://plateforme.adresse.data.gouv.fr/api-fantoir/departements/54/communes
+
 ### Afficher les informations d'une commune
 
 `GET /communes/54084`
+
+Exemple : https://plateforme.adresse.data.gouv.fr/api-fantoir/communes/54084
 
 ### Lister les voies et les lieux-dits d'une commune
 
 `GET /communes/54084/voies`
 
+Exemple : https://plateforme.adresse.data.gouv.fr/api-fantoir/communes/54084/voies
+
 ### Afficher les informations d'une voie ou d'un lieu-dit
 
 `GET /communes/54084/voies/0100`
+
+Exemple : https://plateforme.adresse.data.gouv.fr/api-fantoir/communes/54084/voies/0100
+
 `GET /voies/54084-0100`
+
+Exemple : https://plateforme.adresse.data.gouv.fr/api-fantoir/voies/54084-0100
