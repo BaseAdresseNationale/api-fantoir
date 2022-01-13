@@ -52,3 +52,7 @@ Exemple : https://plateforme.adresse.data.gouv.fr/api-fantoir/communes/54084/voi
 `GET /voies/54084-0100`
 
 Exemple : https://plateforme.adresse.data.gouv.fr/api-fantoir/voies/54084-0100
+
+## Scrapping
+
+Merci de ne pas scrapper l'instance de production. Ce sont des données publiques accessibles à tous sur [data.gouv.fr](https://www.data.gouv.fr/fr/datasets/fichier-fantoir-des-voies-et-lieux-dits/).
