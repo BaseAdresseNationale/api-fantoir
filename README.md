@@ -40,6 +40,7 @@ Exemple : https://plateforme.adresse.data.gouv.fr/api-fantoir/communes/54084
 ### Lister les voies et les lieux-dits d'une commune
 
 `GET /communes/54084/voies`
+`GET /communes/54084/voies.csv`
 
 Exemple : https://plateforme.adresse.data.gouv.fr/api-fantoir/communes/54084/voies
 

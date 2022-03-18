@@ -8,7 +8,7 @@ import cors from 'cors'
 import mongo from './lib/mongo.js'
 import w from './lib/w.js'
 import errorHandler from './lib/error-handler.js'
-import {listCommunes, showCommune, listVoies, showVoie} from './lib/routes.js'
+import {listCommunes, showCommune, listVoies, listVoiesCsv, showVoie} from './lib/routes.js'
 
 function createServer() {
   const app = express()
@@ -25,6 +25,7 @@ function createServer() {
   app.get('/departements/:codeDepartement/communes', w(listCommunes))
   app.get('/communes/:codeCommune', w(showCommune))
   app.get('/communes/:codeCommune/voies', w(listVoies))
+  app.get('/communes/:codeCommune/voies.csv', w(listVoiesCsv))
   app.get('/voies/:idVoie', w(showVoie))
   app.get('/communes/:codeCommune/voies/:codeVoie', w(showVoie))
 
