@@ -1,13 +1,34 @@
 #!/usr/bin/env node
 import 'dotenv/config.js'
 
+import process from 'node:process'
 import {createGunzip} from 'node:zlib'
 import {Transform} from 'node:stream'
 import {finished} from 'node:stream/promises'
+import {createReadStream} from 'node:fs'
 
 import got from 'got'
 import {createParser} from '@etalab/fantoir-parser'
 import mongo from './lib/mongo.js'
+
+const FANTOIR_PATH = process.env.FANTOIR_PATH || 'https://adresse.data.gouv.fr/data/fantoir/latest'
+const TERRITOIRES = process.env.TERRITOIRES ? process.env.TERRITOIRES.split(',') : undefined
+
+function createFantoirStream() {
+  if (FANTOIR_PATH.startsWith('http')) {
+    return got.stream(FANTOIR_PATH)
+  }
+
+  return createReadStream(FANTOIR_PATH)
+}
+
+function conformToTerritoiresConfig(codeCommune) {
+  if (!TERRITOIRES) {
+    return true
+  }
+
+  return TERRITOIRES.some(codeTerritoire => codeCommune.startsWith(codeTerritoire))
+}
 
 function createLoader(mongo) {
   const communes = []
@@ -23,7 +44,7 @@ function createLoader(mongo) {
 
       if (item.type === 'commune') {
         try {
-          if (currentCommune && currentVoies.length > 0) {
+          if (currentCommune && conformToTerritoiresConfig(currentCommune.codeCommune) && currentVoies.length > 0) {
             console.log(`Inserting ${currentCommune.codeCommune}`)
             await mongo.db.collection('voies').insertMany(currentVoies)
           }
@@ -65,7 +86,7 @@ async function main() {
 
   const loader = createLoader(mongo)
 
-  got.stream('https://adresse.data.gouv.fr/data/fantoir/latest')
+  createFantoirStream()
     .pipe(createGunzip())
     .pipe(createParser({accept: ['commune', 'voie']}))
     .pipe(loader)
