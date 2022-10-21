@@ -23,7 +23,7 @@ function createLoader(mongo) {
 
       if (item.type === 'commune') {
         try {
-          if (currentCommune) {
+          if (currentCommune && currentVoies.length > 0) {
             console.log(`Inserting ${currentCommune.codeCommune}`)
             await mongo.db.collection('voies').insertMany(currentVoies)
           }
@@ -40,7 +40,7 @@ function createLoader(mongo) {
 
     async flush(cb) {
       try {
-        if (currentCommune) {
+        if (currentCommune && currentVoies.length > 0) {
           await mongo.db.collection('voies').insertMany(currentVoies)
         }
 
