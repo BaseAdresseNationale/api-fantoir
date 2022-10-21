@@ -7,14 +7,30 @@ API pour naviguer dans FANTOIR
 - MongoDB version 4.0 ou supérieure
 - yarn
 
-## Installation
+## Installation des dépendances
 
 ```bash
-# Installation des dépendances Node.js
-$ yarn
+yarn
+```
 
-# Chargement des données
-$ yarn load-data
+## Configuration
+
+Ce dépôt fonctionne avec une configuration par défaut. Il est néanmoins possible de modifier la configuration en changeant les variables d’environnements.
+
+Le fichier `.env.sample` est présent à des fins d’exemple pour créer un fichier `.env`.
+Toutes les variables sont optionnelles.
+
+| Nom de la variable | Description | Valeur par défaut |
+| --- | --- | --- |
+| `MONGODB_URL` | Chemin de connexion à la base MongoDB | `mongodb://localhost` |
+| `MONGODB_DBNAME` | Nom de la base de données MongoDB | `api-fantoir` |
+| `TERRITOIRES` | Liste séparée par des virgules des territoires à prendre en compte (communes ou départements) | (vide) |
+| `FANTOIR_PATH` | Chemin d’accès au fichier FANTOIR à importer. Peut-être une URL ou un chemin local | `https://adresse.data.gouv.fr/data/fantoir/latest` |
+
+## Chargement des données
+
+```bash
+yarn load-data
 ```
 
 ## Démarrer le serveur
