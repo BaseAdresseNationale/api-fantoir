@@ -61,7 +61,8 @@ function createLoader(mongo) {
 
     async flush(cb) {
       try {
-        if (currentCommune && currentVoies.length > 0) {
+        if (currentCommune && conformToTerritoiresConfig(currentCommune.codeCommune) && currentVoies.length > 0) {
+          console.log(`Inserting ${currentCommune.codeCommune}`)
           await mongo.db.collection('voies').insertMany(currentVoies)
         }
 
@@ -91,7 +92,7 @@ async function main() {
     .pipe(createParser({accept: ['commune', 'voie']}))
     .pipe(loader)
 
-  await finished(loader)
+  await finished(loader, {readable: false})
   await mongo.disconnect()
 
   process.exit(0)
