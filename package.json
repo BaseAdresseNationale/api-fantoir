@@ -9,7 +9,8 @@
   "type": "module",
   "scripts": {
     "lint": "xo",
-    "load-data": "node load-data"
+    "load-data": "node load-data",
+    "start": "node server"
   },
   "dependencies": {
     "@etalab/fantoir-parser": "^0.5.0",
