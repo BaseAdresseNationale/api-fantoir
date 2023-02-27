@@ -1,0 +1,24 @@
+services:
+  db:
+    # Version of mongoDB currently in production
+    image: mongo:4.2.23
+    ports:
+      - "${MONGODB_PORT:-27017}:27017"
+    volumes:
+      - db:/data/db
+  api:
+    build: 
+      dockerfile: 'Dockerfile.dev'
+    depends_on:
+      - db
+    environment:
+      - MONGODB_URL=mongodb://db
+      - MONGODB_DBNAME=${MONGODB_DBNAME}
+      - TERRITOIRES=${TERRITOIRES}
+      - FANTOIR_PATH=${FANTOIR_PATH}
+      - FORCE_LOAD_FANTOIR_DATA=${FORCE_LOAD_FANTOIR_DATA}
+    ports:
+      - "${PORT:-5000}:5000"
+
+volumes:
+  db:
