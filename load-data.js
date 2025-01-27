@@ -16,7 +16,7 @@ const {
   HTTP_PROXY,
 } = process.env
 
-const FANTOIR_PATH = process.env.FANTOIR_PATH || 'https://adresse.data.gouv.fr/data/fantoir/latest'
+const FANTOIR_PATH = process.env.FANTOIR_PATH || 'https://adresse.data.gouv.fr/data/fantoir/fantoir-2023-04.gz'
 const TERRITOIRES = process.env.TERRITOIRES ? process.env.TERRITOIRES.split(',') : undefined
 
 async function createFantoirStream() {
