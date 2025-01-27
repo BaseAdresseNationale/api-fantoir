@@ -2,21 +2,34 @@
 import 'dotenv/config.js'
 
 import process from 'node:process'
-import {createGunzip} from 'node:zlib'
-import {Transform} from 'node:stream'
-import {finished} from 'node:stream/promises'
-import {createReadStream} from 'node:fs'
+import { createGunzip } from 'node:zlib'
+import { Transform } from 'node:stream'
+import { finished } from 'node:stream/promises'
+import { createReadStream } from 'node:fs'
+import fetch from 'node-fetch'
+import { HttpsProxyAgent } from 'https-proxy-agent'
+import { Readable } from 'node:stream'
 
-import got from 'got'
-import {createParser} from '@etalab/fantoir-parser'
+import { createParser } from '@etalab/fantoir-parser'
 import mongo from './lib/mongo.js'
+
+const {
+  HTTP_PROXY: HTTP_PROXY,
+} = process.env
 
 const FANTOIR_PATH = process.env.FANTOIR_PATH || 'https://adresse.data.gouv.fr/data/fantoir/latest'
 const TERRITOIRES = process.env.TERRITOIRES ? process.env.TERRITOIRES.split(',') : undefined
 
-function createFantoirStream() {
+async function createFantoirStream() {
   if (FANTOIR_PATH.startsWith('http')) {
-    return got.stream(FANTOIR_PATH)
+    const agent = HTTP_PROXY ? new HttpsProxyAgent(HTTP_PROXY) : undefined
+    const response = await fetch(FANTOIR_PATH, { agent })
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch ${FANTOIR_PATH}: ${response.status} ${response.statusText}`)
+    }
+
+    return Readable.from(response.body)
   }
 
   return createReadStream(FANTOIR_PATH)
@@ -87,12 +100,13 @@ async function main() {
 
   const loader = createLoader(mongo)
 
-  createFantoirStream()
+  const fantoirStream = await createFantoirStream()
+  fantoirStream
     .pipe(createGunzip())
-    .pipe(createParser({accept: ['commune', 'voie']}))
+    .pipe(createParser({ accept: ['commune', 'voie'] }))
     .pipe(loader)
 
-  await finished(loader, {readable: false})
+  await finished(loader, { readable: false })
   await mongo.disconnect()
 
   process.exit(0)
