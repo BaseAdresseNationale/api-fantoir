@@ -3,10 +3,10 @@ FROM node:16.19.0-alpine
 
 # optimzing caching for yarn install
 WORKDIR /app
-COPY package.json yarn.lock .
+COPY package.json yarn.lock ./
 RUN yarn install
 
 # copying the root folder into the workdir taking into account the .dockerignore file
 COPY . .
 
-CMD ["sh", "start.dev.sh"]
+CMD ["sh", "start.sh"]
