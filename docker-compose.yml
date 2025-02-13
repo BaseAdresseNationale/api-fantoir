@@ -12,7 +12,8 @@ services:
     depends_on:
       - db
     environment:
-      - MONGODB_URL=mongodb://db
+      - MONGODB_HOST=db
+      - MONGODB_PORT=27017
       - MONGODB_DBNAME=${MONGODB_DBNAME}
       - TERRITOIRES=${TERRITOIRES}
       - FANTOIR_PATH=${FANTOIR_PATH}
