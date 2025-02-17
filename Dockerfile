@@ -23,4 +23,8 @@ COPY --from=builder /app/package.json ./package.json
 # copying the root folder into the workdir taking into account the .dockerignore file
 COPY . .
 
+USER node
+
+EXPOSE 5000
+
 CMD ["sh", "start.sh"]
