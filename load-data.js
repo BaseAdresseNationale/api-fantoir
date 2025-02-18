@@ -8,6 +8,7 @@ import {finished} from 'node:stream/promises'
 import {createReadStream} from 'node:fs'
 import fetch from 'node-fetch'
 import {HttpsProxyAgent} from 'https-proxy-agent'
+import async from 'async'
 
 import {createParser} from '@etalab/fantoir-parser'
 import mongo from './lib/mongo.js'
@@ -45,10 +46,34 @@ function conformToTerritoiresConfig(codeCommune) {
 function createLoader(mongo) {
   const communes = []
   let currentCommune
-  let currentVoies
+  let currentVoies = []
+
+  // Create an async queue with concurrency = 1 (one task at a time)
+  const dbQueue = async.queue(async (task, done) => {
+    try {
+      await task()
+      done()
+    } catch (error) {
+      done(error)
+    }
+  }, 1)
+
+  const insertVoies = async (voies, codeCommune) => {
+    if (voies.length > 0) {
+      console.log(`Inserting ${voies.length} voies for commune ${codeCommune}`)
+      await mongo.db.collection('voies').insertMany(voies)
+    }
+  }
+
+  const insertCommunes = async communesToInsert => {
+    if (communesToInsert.length > 0) {
+      console.log(`Inserting ${communesToInsert.length} communes`)
+      await mongo.db.collection('communes').insertMany(communesToInsert)
+    }
+  }
 
   return new Transform({
-    async transform(item, enc, cb) {
+    transform(item, enc, cb) {
       if (item.type === 'voie') {
         currentVoies.push(item)
         cb()
@@ -57,13 +82,14 @@ function createLoader(mongo) {
       if (item.type === 'commune') {
         try {
           if (currentCommune && conformToTerritoiresConfig(currentCommune.codeCommune) && currentVoies.length > 0) {
-            console.log(`Inserting ${currentCommune.codeCommune}`)
-            await mongo.db.collection('voies').insertMany(currentVoies)
+            const voiesCopy = [...currentVoies]
+            const communeCopy = {...currentCommune}
+            dbQueue.push(() => insertVoies(voiesCopy, communeCopy.codeCommune))
           }
 
-          currentVoies = []
           currentCommune = item
           communes.push(item)
+          currentVoies = []
           cb()
         } catch (error) {
           cb(error)
@@ -71,15 +97,20 @@ function createLoader(mongo) {
       }
     },
 
-    async flush(cb) {
+    flush(cb) {
       try {
         if (currentCommune && conformToTerritoiresConfig(currentCommune.codeCommune) && currentVoies.length > 0) {
-          console.log(`Inserting ${currentCommune.codeCommune}`)
-          await mongo.db.collection('voies').insertMany(currentVoies)
+          const voiesCopy = [...currentVoies]
+          const communeCopy = {...currentCommune}
+          dbQueue.push(() => insertVoies(voiesCopy, communeCopy.codeCommune))
         }
 
-        await mongo.db.collection('communes').insertMany(communes)
-        cb()
+        if (communes.length > 0) {
+          const communesCopy = [...communes]
+          dbQueue.push(() => insertCommunes(communesCopy))
+        }
+
+        dbQueue.drain(cb)
       } catch (error) {
         cb(error)
       }
