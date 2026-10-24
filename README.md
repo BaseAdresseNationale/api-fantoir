@@ -5,7 +5,7 @@ API pour naviguer dans FANTOIR
 
 ### Prérequis 
 
-- Node.js version 16.13.0 ou supérieure
+- Node.js version 24.22.1 ou supérieure
 - MongoDB version 4.0 ou supérieure
 - yarn
 

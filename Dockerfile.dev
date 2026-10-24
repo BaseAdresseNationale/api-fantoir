@@ -1,10 +1,10 @@
 # using an optimized node image
-FROM node:16.19.0-alpine
+FROM node:24.22.1-alpine
 
 # optimzing caching for yarn install
 WORKDIR /app
 COPY package.json yarn.lock ./
-RUN yarn install
+RUN yarn install --frozen-lockfile
 
 # copying the root folder into the workdir taking into account the .dockerignore file
 COPY . .
