@@ -22,7 +22,7 @@ function createServer() {
   app.use(cors({origin: true}))
 
   /* Define routes */
-  app.get('/health', w(health)) 
+  app.get('/health', w(health))
   app.get('/departements/:codeDepartement/communes', w(listCommunes))
   app.get('/communes/:codeCommune', w(showCommune))
   app.get('/communes/:codeCommune/voies', w(listVoies))
