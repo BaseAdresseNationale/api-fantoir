@@ -1,5 +1,5 @@
 # Stage 1: Use to optimize image
-FROM node:24.22.1-alpine AS builder
+FROM node:24.22.3-alpine3.24 AS builder
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -11,7 +11,7 @@ COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
 # Stage 2: Create production image
-FROM node:24.22.1-alpine AS runner
+FROM node:24.22.3-alpine3.24 AS runner
 
 # optimzing caching for install
 WORKDIR /app
